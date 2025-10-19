@@ -1,0 +1,5 @@
+﻿*.sav
+*.pkl
+*.h5
+*.zip
+__pycache__/
