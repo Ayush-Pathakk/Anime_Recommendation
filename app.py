@@ -3,17 +3,11 @@ import pandas as pd
 import pickle
 from difflib import get_close_matches
 
-# ------------------------------
-# Page setup
-# ------------------------------
 st.set_page_config(page_title="Anime Recommendation System", layout="centered")
 
 st.title("🎌 Anime Recommendation System")
 st.markdown("Get anime recommendations based on your favorite show!")
 
-# ------------------------------
-# Load data and model
-# ------------------------------
 @st.cache_data
 def load_data():
     anime = pd.read_csv("anime.csv")
@@ -28,13 +22,9 @@ def load_model():
 anime_data = load_data()
 similarity = load_model()
 
-# ------------------------------
-# Recommendation function
-# ------------------------------
 def recommend(anime):
     from difflib import get_close_matches
     
-    # Find closest match
     closest_matches = get_close_matches(anime, anime_data['name'], n=1, cutoff=0.6)
     if not closest_matches:
         return ["Anime not found, please check spelling."]
@@ -47,9 +37,6 @@ def recommend(anime):
     recommendations = [anime_data.iloc[i[0]]['name'] for i in anime_list]
     return recommendations
 
-# ------------------------------
-# Interface
-# ------------------------------
 anime_list = anime_data['name'].dropna().unique()
 selected_anime = st.selectbox("🎯 Choose an anime you like:", anime_list)
 
